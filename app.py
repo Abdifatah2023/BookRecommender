@@ -8,7 +8,6 @@ from langchain_text_splitters import CharacterTextSplitter
 from langchain_chroma import Chroma
 
 import gradio as gr
-from unicodedata import category
 
 load_dotenv()
 
@@ -84,7 +83,7 @@ def recommend_books(
 categories = ["All"] + sorted(books["simple_categories"].unique())
 tones = ["All"] + ["Happy", "Surprising", "Angry", "Suspenseful", "Sad"]
 
-with gr.Blocks(theme = gr.themes.Glass()) as dashboard:
+with gr.Blocks(theme = gr.themes.Soft()) as dashboard:
     gr.Markdown("# Semantic Book Recommender")
 
     with gr.Row():
