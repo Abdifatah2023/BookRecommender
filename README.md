@@ -1,7 +1,15 @@
-Perfect — since you used **Gradio** instead of Streamlit, here’s an updated **README.md** tailored to your project setup:
+---
+title: Book Recommender
+emoji: 📚
+colorFrom: blue
+colorTo: purple
+sdk: gradio
+sdk_version: 5.0.0
+app_file: app.py
+pinned: false
 ---
 
-# 📚 Book Recommender System
+## 📚 Book Recommender System
 
 An intelligent **book recommendation system** built with **Python** and **Large Language Models (LLMs)**.
 This project uses **semantic embeddings** to understand book descriptions and recommend similar titles based on meaning, not just keywords.
@@ -88,7 +96,7 @@ Once launched, you’ll see an interface where you can:
 
 Make sure `.env` is **ignored** in your repository:
 
-```
+```gitignore
 # .gitignore
 .env
 ```
