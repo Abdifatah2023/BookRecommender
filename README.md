@@ -4,7 +4,7 @@ emoji: 📚
 colorFrom: blue
 colorTo: purple
 sdk: gradio
-sdk_version: 5.0.0
+sdk_version: 5.49.1
 app_file: app.py
 pinned: false
 ---
@@ -30,10 +30,11 @@ The interactive **Gradio dashboard** allows users to input a book title or descr
 ## 🧰 Tech Stack
 
 * **Python 3.10+**
-* **pandas**, **numpy**, **scikit-learn** – for data processing and similarity computation
-* **OpenAI API** or **SentenceTransformers** – for text embeddings
+* **pandas**, **numpy** – for data processing
+* **OpenAI API** – for text embeddings
+* **LangChain + ChromaDB** – for vector similarity search
+* **Transformers (HuggingFace)** – for emotion and category classification
 * **Gradio** – to build the user interface
-* **Jupyter Notebook** – for model experimentation and analysis
 
 ---
 
@@ -47,28 +48,26 @@ This project uses the **[7k Books with Metadata](https://www.kaggle.com/datasets
 * Genres
 * ISBN and publication details
 
-You can replace this dataset with any custom dataset containing similar fields.
-
 ---
 
 ## ⚙️ Setup Instructions
 
 ```bash
-# 1️⃣ Clone the repository
+# 1. Clone the repository
 git clone https://github.com/Abdifatah2023/BookRecommender.git
 cd BookRecommender
 
-# 2️⃣ Create a virtual environment
+# 2. Create a virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# 3️⃣ Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 
-# 4️⃣ Create a .env file for your API key (if using OpenAI)
+# 4. Create a .env file with your OpenAI API key
 echo "OPENAI_API_KEY=your_api_key_here" > .env
 
-# 5️⃣ Run the Gradio app
+# 5. Run the Gradio app
 python app.py
 ```
 
@@ -77,18 +76,20 @@ python app.py
 ## 🧠 How It Works
 
 1. **Preprocessing** – Cleans and normalizes book descriptions.
-2. **Embedding Generation** – Converts text to dense vectors using OpenAI or SentenceTransformers.
-3. **Similarity Computation** – Uses cosine similarity to rank the most similar books.
-4. **Recommendation Output** – Displays top-N results in the Gradio dashboard.
+2. **Embedding Generation** – Converts text to dense vectors using OpenAI embeddings.
+3. **Vector Search** – Uses ChromaDB to find semantically similar books.
+4. **Emotion Filtering** – Ranks results by emotional tone (joy, fear, sadness, etc.).
+5. **Recommendation Output** – Displays top results in the Gradio dashboard.
 
 ---
 
 ## 🖥️ Gradio Dashboard
 
-Once launched, you’ll see an interface where you can:
+Once launched, you'll see an interface where you can:
 
 * Enter a **book description**
-* Choose category as well as an emotional tone
+* Choose a **category** (Fiction, Nonfiction, Children's Fiction)
+* Choose an **emotional tone** (Happy, Surprising, Angry, Suspenseful, Sad)
 
 ---
 
@@ -100,3 +101,5 @@ Make sure `.env` is **ignored** in your repository:
 # .gitignore
 .env
 ```
+
+Set your `OPENAI_API_KEY` as a Space secret in the Hugging Face dashboard — never commit it.
