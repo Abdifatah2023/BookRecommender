@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
 
-from langchain_community.document_loaders import TextLoader
-from langchain_openai import OpenAIEmbeddings
+from langchain_core.documents import Document
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_chroma import Chroma
 
@@ -19,10 +19,14 @@ books["large_thumbnail"] = np.where(
     books["large_thumbnail"],
 )
 
-raw_documents = TextLoader("tagged_description.txt", encoding="utf-8").load()
+with open("tagged_description.txt", encoding="utf-8") as f:
+    content = f.read()
+raw_documents = [Document(page_content=content, metadata={"source": "tagged_description.txt"})]
 text_splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=0, separator="\n")
 documents = text_splitter.split_documents(raw_documents)
-db_books = Chroma.from_documents(documents, OpenAIEmbeddings())
+
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+db_books = Chroma.from_documents(documents, embeddings)
 
 
 def retrieve_semantic_recommendations(
